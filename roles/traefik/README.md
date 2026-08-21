@@ -21,19 +21,19 @@ El rol detecta automáticamente si el daemon está unido a un Swarm.
 
 ## Variables principales
 
-| Variable                              | Valor por defecto          | Descripción                                       |
-| ------------------------------------- | -------------------------- | ------------------------------------------------- |
-| `traefik.image`                       | `traefik:v3.7`             | Imagen de Traefik                                 |
-| `traefik.network_name`                | `traefik`                  | Red Docker/Swarm                                  |
-| `traefik.create_network`              | `true`                     | Crear la red si no existe                         |
-| `traefik.dynamic_config_dir`          | `/etc/traefik/dynamic`     | Directorio de configuración dinámica del host     |
-| `traefik.dynamic_config_enabled`      | `true`                     | Habilitar el montaje del directorio dinámico      |
-| `traefik.command`                     | ver defaults               | Argumentos comunes de Traefik para ambos modos    |
-| `traefik.extra_command`               | `[]`                       | Argumentos adicionales para ambos modos           |
-| `traefik.ports`                       | ver defaults               | Puertos publicados en standalone y Swarm          |
-| `traefik.labels`                      | `{}`                       | Labels del contenedor o servicio Traefik          |
+| Variable                              | Valor por defecto          | Descripción                                        |
+| ------------------------------------- | -------------------------- | -------------------------------------------------- |
+| `traefik.image`                       | `traefik:v3.7`             | Imagen de Traefik                                  |
+| `traefik.network_name`                | `traefik`                  | Red Docker/Swarm                                   |
+| `traefik.create_network`              | `true`                     | Crear la red si no existe                          |
+| `traefik.dynamic_config_dir`          | `/etc/traefik/dynamic`     | Directorio de configuración dinámica del host      |
+| `traefik.dynamic_config_enabled`      | `true`                     | Habilitar el montaje del directorio dinámico       |
+| `traefik.command`                     | ver defaults               | Argumentos comunes de Traefik para ambos modos     |
+| `traefik.extra_command`               | `[]`                       | Argumentos adicionales para ambos modos            |
+| `traefik.ports`                       | ver defaults               | Puertos publicados en standalone y Swarm           |
+| `traefik.labels`                      | `{}`                       | Labels del contenedor o servicio Traefik           |
 | `traefik.secrets`                     | `[]`                       | Secrets Docker existentes que se adjuntan en Swarm |
-| `traefik.swarm_placement_constraints` | `['node.role == manager']` | Restricciones del servicio Swarm                  |
+| `traefik.swarm_placement_constraints` | `['node.role == manager']` | Restricciones del servicio Swarm                   |
 
 Para una red overlay existente, use `traefik.create_network: false` y establezca el mismo `traefik.network_name`.
 
@@ -49,7 +49,6 @@ Para usar un secret existente en Swarm, indique al menos `secret_name`; también
             gid: "0"
             mode: 0400
 ```
-
 
 ```yaml
 - name: Deploy Traefik

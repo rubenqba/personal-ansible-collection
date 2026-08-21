@@ -18,32 +18,84 @@ which requirements are needed.
 
 ## Using this collection
 
-```bash
-    ansible-galaxy collection install rubenqba.servers
+Install the collection as a dependency of an Ansible project. Create a
+`collections/requirements.yml` file in the project directory:
+
+```yaml
+---
+collections:
+  - name: rubenqba.servers
+  - name: community.docker
+    version: ">=3.0.0"
 ```
 
-You can also include it in a `requirements.yml` file and install it via
-`ansible-galaxy collection install -r requirements.yml` using the format:
+Install the project dependencies from the project root:
+
+```bash
+ansible-galaxy collection install -r collections/requirements.yml
+```
+
+Use the role in a playbook with its fully qualified collection name:
+
+```yaml
+---
+- name: Deploy Traefik
+  hosts: docker
+  become: true
+  roles:
+    - role: rubenqba.servers.traefik
+```
+
+The `community.docker` dependency is required by the Traefik role. If the
+project uses other roles from this collection, add any additional collection
+dependencies to the same requirements file.
+
+To install the collection directly from Ansible Galaxy instead, run:
+
+```bash
+ansible-galaxy collection install rubenqba.servers
+```
+
+You can also install the collection directly from this Git repository. In a
+Git-based requirement, use the repository URL as `name` (not the collection
+name). To use a specific tag, set `type: git` and use the tag in `version`:
+
+```yaml
+collections:
+  - name: https://github.com/rubenqba/personal-ansible-collection.git
+    type: git
+    version: v1.0.0
+```
+
+To use a branch, replace the tag with the branch name. For example, to use the
+`main` branch:
+
+```yaml
+collections:
+  - name: https://github.com/rubenqba/personal-ansible-collection.git
+    type: git
+    version: main
+```
+
+The collection name used in playbooks remains `rubenqba.servers`, as defined in
+`galaxy.yml`. Install either Git-based configuration from the project root with:
+
+```bash
+ansible-galaxy collection install -r collections/requirements.yml
+```
+
+To pin a collection version, add a `version` field to its entry. For example:
 
 ```yaml
 collections:
   - name: rubenqba.servers
+    version: ">=1.0.0,<2.0.0"
 ```
 
-To upgrade the collection to the latest available version, run the following
-command:
+To upgrade a directly installed collection, run:
 
 ```bash
 ansible-galaxy collection install rubenqba.servers --upgrade
-```
-
-You can also install a specific version of the collection, for example, if you
-need to downgrade when something is broken in the latest version (please report
-an issue in this repository). Use the following syntax where `X.Y.Z` can be any
-[available version](https://galaxy.ansible.com/rubenqba/servers):
-
-```bash
-ansible-galaxy collection install rubenqba.servers:==X.Y.Z
 ```
 
 See
