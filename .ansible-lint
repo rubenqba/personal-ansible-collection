@@ -1,0 +1,9 @@
+---
+# Basic ansible-lint configuration. Extend this as the collection grows.
+profile: production
+exclude_paths:
+  - .cache/
+  - .git/
+  - .venv/
+  - .devcontainer/
+  - tests/
