@@ -12,12 +12,14 @@
   community.docker.docker_swarm_service:
     name: "{{ traefik.service_name }}"
     image: "{{ traefik.image }}"
-    args: "{{ traefik.swarm_command + traefik.extra_command }}"
+    args: >-
+      {{ traefik.command + ['--providers.swarm=true', '--providers.swarm.endpoint=unix:///var/run/docker.sock',
+         '--providers.swarm.exposedbydefault=false'] + traefik.extra_command }}
     env: "{{ traefik.env }}"
     labels: "{{ traefik.labels }}"
     networks:
       - "{{ traefik.network_name }}"
-    publish: "{{ traefik.swarm_publish }}"
+    publish: "{{ traefik.ports }}"
     mounts: >-
       {{ [{'source': traefik.docker_socket, 'target': '/var/run/docker.sock', 'type': 'bind', 'read_only': true}]
          + ([{'source': traefik.dynamic_config_dir, 'target': traefik.dynamic_config_container_dir,

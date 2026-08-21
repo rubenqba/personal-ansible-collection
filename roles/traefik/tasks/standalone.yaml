@@ -10,13 +10,16 @@
   community.docker.docker_container:
     name: "{{ traefik.container_name }}"
     image: "{{ traefik.image }}"
-    command: "{{ traefik.command + traefik.extra_command }}"
+    command: >-
+      {{ traefik.command + ['--providers.docker=true', '--providers.docker.exposedbydefault=false']
+         + traefik.extra_command }}
     env: "{{ traefik.env }}"
     labels: "{{ traefik.labels }}"
     networks:
       - name: "{{ traefik.network_name }}"
-    published_ports: "{{ traefik.published_ports }}"
-    exposed_ports: "{{ traefik.exposed_ports }}"
+    published_ports: >-
+      {{ traefik.ports | map(attribute='published_port') | zip(traefik.ports | map(attribute='target_port'))
+         | map('join', ':') | list }}
     volumes: >-
       {{ [traefik.docker_socket ~ ':/var/run/docker.sock:ro'] +
          ([traefik.dynamic_config_dir ~ ':' ~ traefik.dynamic_config_container_dir ~ ':ro']

@@ -1,7 +1,7 @@
 ---
 # The public variable is intentionally grouped under the role name.
 traefik:  # noqa var-naming[no-role-prefix]
-  image: "traefik:v3.0"
+  image: "traefik:v3.7"
   container_name: "traefik"
   service_name: "traefik"
   network_name: "traefik"
@@ -16,29 +16,19 @@ traefik:  # noqa var-naming[no-role-prefix]
 
   docker_socket: "/var/run/docker.sock"
   log_level: "INFO"
-  published_ports:
-    - "80:80"
-    - "443:443"
-  exposed_ports:
-    - "80/tcp"
-    - "443/tcp"
+  ports:
+    - published_port: 80
+      target_port: 80
+      protocol: tcp
+      publish_mode: ingress
+    - published_port: 443
+      target_port: 443
+      protocol: tcp
+      publish_mode: ingress
 
-  # Additional command-line arguments can be supplied by the caller.
+  # Common command-line arguments shared by standalone and Swarm deployments.
   command:
     - "--api.dashboard=true"
-    - "--providers.docker=true"
-    - "--providers.docker.exposedbydefault=false"
-    - "--providers.file.directory={{ traefik.dynamic_config_container_dir }}"
-    - "--providers.file.watch=true"
-    - "--entrypoints.web.address=:80"
-    - "--entrypoints.websecure.address=:443"
-    - "--log.level={{ traefik.log_level }}"
-  # The Swarm provider is used when the daemon is a Swarm manager.
-  swarm_command:
-    - "--api.dashboard=true"
-    - "--providers.swarm=true"
-    - "--providers.swarm.endpoint=unix:///var/run/docker.sock"
-    - "--providers.swarm.exposedbydefault=false"
     - "--providers.file.directory={{ traefik.dynamic_config_container_dir }}"
     - "--providers.file.watch=true"
     - "--entrypoints.web.address=:80"
@@ -49,15 +39,6 @@ traefik:  # noqa var-naming[no-role-prefix]
   labels: {}
   restart_policy: "unless-stopped"
   swarm_replicas: 1
-  swarm_publish:
-    - mode: ingress
-      published_port: 80
-      target_port: 80
-      protocol: tcp
-    - mode: ingress
-      published_port: 443
-      target_port: 443
-      protocol: tcp
   swarm_update_config:
     parallelism: 1
     delay: "10s"
