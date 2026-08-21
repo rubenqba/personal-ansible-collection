@@ -1,0 +1,32 @@
+---
+- name: Create Traefik Swarm overlay network
+  community.docker.docker_network:
+    name: "{{ traefik.network_name }}"
+    driver: overlay
+    attachable: true
+    scope: swarm
+    state: present
+  when: traefik.create_network
+
+- name: Deploy Traefik as a Swarm service on a manager
+  community.docker.docker_swarm_service:
+    name: "{{ traefik.service_name }}"
+    image: "{{ traefik.image }}"
+    args: "{{ traefik.swarm_command + traefik.extra_command }}"
+    env: "{{ traefik.env }}"
+    labels: "{{ traefik.labels }}"
+    networks:
+      - "{{ traefik.network_name }}"
+    publish: "{{ traefik.swarm_publish }}"
+    mounts: >-
+      {{ [{'source': traefik.docker_socket, 'target': '/var/run/docker.sock', 'type': 'bind', 'read_only': true}]
+         + ([{'source': traefik.dynamic_config_dir, 'target': traefik.dynamic_config_container_dir,
+              'type': 'bind', 'read_only': true}] if traefik.dynamic_config_enabled else []) }}
+    replicas: "{{ traefik.swarm_replicas }}"
+    placement:
+      constraints: "{{ traefik.swarm_placement_constraints }}"
+    update_config: "{{ traefik.swarm_update_config }}"
+    restart_policy:
+      condition: any
+    state: present
+  when: (traefik_swarm_info.swarm_facts.ControlAvailable | default(false) | bool)

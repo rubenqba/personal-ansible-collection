@@ -1,6 +1,8 @@
-#SPDX-License-Identifier: MIT-0
 ---
-- hosts: localhost
-  remote_user: root
+# Traefik role test playbook.
+- name: Validate Traefik role syntax and execution path
+  hosts: localhost
+  connection: local
+  gather_facts: false
   roles:
-    - roles/traefik
+    - role: traefik

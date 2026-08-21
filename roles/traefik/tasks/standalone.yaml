@@ -1,5 +1,25 @@
 ---
+- name: Create Traefik Docker network
+  community.docker.docker_network:
+    name: "{{ traefik.network_name }}"
+    driver: "{{ traefik.network_driver }}"
+    state: present
+  when: traefik.create_network
 
-- name: 'Create Traefik standalone deploy'
-  ansible.builtin.docker_service:
-    
+- name: Deploy Traefik standalone container
+  community.docker.docker_container:
+    name: "{{ traefik.container_name }}"
+    image: "{{ traefik.image }}"
+    command: "{{ traefik.command + traefik.extra_command }}"
+    env: "{{ traefik.env }}"
+    labels: "{{ traefik.labels }}"
+    networks:
+      - name: "{{ traefik.network_name }}"
+    published_ports: "{{ traefik.published_ports }}"
+    exposed_ports: "{{ traefik.exposed_ports }}"
+    volumes: >-
+      {{ [traefik.docker_socket ~ ':/var/run/docker.sock:ro'] +
+         ([traefik.dynamic_config_dir ~ ':' ~ traefik.dynamic_config_container_dir ~ ':ro']
+         if traefik.dynamic_config_enabled else []) }}
+    restart_policy: "{{ traefik.restart_policy }}"
+    state: started
