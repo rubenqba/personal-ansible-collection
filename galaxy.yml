@@ -19,10 +19,10 @@ tags: ["linux", "tools"]
 dependencies:
   "ansible.utils": "*" # note: "*" selects the latest version available
 
-repository: http://example.com/repository
-documentation: http://docs.example.com
-homepage: http://example.com
-issues: http://example.com/issue/tracker
+repository: https://github.com/rubenqba/personal-ansible-collection
+# documentation: http://docs.example.com
+# homepage: http://example.com
+issues: https://github.com/rubenqba/personal-ansible-collection/issues
 
 # A list of file glob-like patterns used to filter any files or directories that should not be included in the build
 # artifact. A pattern is matched from the relative path of the file or directory of the collection directory. This

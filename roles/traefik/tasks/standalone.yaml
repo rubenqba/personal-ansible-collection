@@ -1,0 +1,5 @@
+---
+
+- name: 'Create Traefik standalone deploy'
+  ansible.builtin.docker_service:
+    
