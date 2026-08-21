@@ -20,6 +20,7 @@
     networks:
       - "{{ traefik.network_name }}"
     publish: "{{ traefik.ports }}"
+    secrets: "{{ traefik.secrets }}"
     mounts: >-
       {{ [{'source': traefik.docker_socket, 'target': '/var/run/docker.sock', 'type': 'bind', 'read_only': true}]
          + ([{'source': traefik.dynamic_config_dir, 'target': traefik.dynamic_config_container_dir,

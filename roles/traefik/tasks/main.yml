@@ -16,6 +16,15 @@
     mode: "0755"
   when: traefik.dynamic_config_enabled
 
+- name: Reject secrets for standalone deployment
+  ansible.builtin.fail:
+    msg: >-
+      Traefik secrets require Docker Swarm. Run this role on a Swarm manager or
+      remove traefik.secrets from the configuration.
+  when:
+    - not traefik_is_swarm
+    - traefik.secrets | length > 0
+
 - name: Deploy Traefik on Docker standalone
   ansible.builtin.include_tasks: standalone.yaml
   when: not traefik_is_swarm

@@ -37,6 +37,7 @@ traefik:  # noqa var-naming[no-role-prefix]
   extra_command: []
   env: {}
   labels: {}
+  secrets: []
   restart_policy: "unless-stopped"
   swarm_replicas: 1
   swarm_update_config:
