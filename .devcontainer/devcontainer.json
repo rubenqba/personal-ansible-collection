@@ -1,28 +1,19 @@
 {
-  "name": "Ansible Collection Development",
-  "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
-  "postCreateCommand": "python -m pip install --upgrade pip && pip install -r requirements.txt && pre-commit install",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "redhat.ansible",
-        "redhat.vscode-yaml",
-        "ms-python.python",
-        "charliermarsh.ruff",
-        "samuelcolvin.jinjahtml",
-        "Anthropic.claude-code",
-        "leodevbro.blockman",
-        "mikestead.dotenv",
-        "EditorConfig.EditorConfig",
-        "yzhang.markdown-all-in-one"
-      ],
-      "settings": {
-        "ansible.python.interpreterPath": "/usr/local/bin/python",
-        "yaml.schemas": {
-          "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json": "/*.yml"
-        }
-      }
-    }
-  },
-  "remoteUser": "vscode"
+  "name": "Personal Servers Ansible Collection Development",
+  "image": "ghcr.io/ansible/community-ansible-dev-tools:latest",
+  "containerUser": "root",
+  "runArgs": [
+    "--security-opt",
+    "seccomp=unconfined",
+    "--security-opt",
+    "label=disable",
+    "--cap-add=SYS_ADMIN",
+    "--cap-add=SYS_RESOURCE",
+    "--device",
+    "/dev/fuse",
+    "--security-opt",
+    "apparmor=unconfined",
+    "--hostname=ansible-dev-container"
+  ],
+  "updateRemoteUserUID": true  
 }

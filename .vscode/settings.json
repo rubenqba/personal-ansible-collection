@@ -1,0 +1,6 @@
+{
+    "ansible.python.interpreterPath": "/usr/local/bin/python",
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json": "/*.yml"
+    }
+}

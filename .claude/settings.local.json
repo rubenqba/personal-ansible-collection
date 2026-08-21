@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__MCP_DOCKER__mcp-find",
+      "Bash(mkdir -p .devcontainer inventories/production/group_vars inventories/production/host_vars playbooks roles collections files templates)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git check-ignore *)",
+      "mcp__MCP_DOCKER__list_pull_requests",
+      "mcp__codebase-memory-mcp__detect_changes",
+      "mcp__codebase-memory-mcp__list_projects",
+      "mcp__codebase-memory-mcp__get_architecture",
+      "mcp__MCP_DOCKER__search_code",
+      "mcp__codebase-memory-mcp__search_code",
+      "mcp__MCP_DOCKER__mcp-exec",
+      "mcp__MCP_DOCKER__browser_navigate",
+      "mcp__MCP_DOCKER__get_latest_release",
+      "mcp__MCP_DOCKER__search_repositories"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "recommendations": [
+        "redhat.ansible",
+        "redhat.vscode-yaml",
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "samuelcolvin.jinjahtml",
+        "Anthropic.claude-code",
+        "leodevbro.blockman",
+        "mikestead.dotenv",
+        "EditorConfig.EditorConfig",
+        "yzhang.markdown-all-in-one",
+        "DavidAnson.vscode-markdownlint",
+        "esbenp.prettier-vscode"
+    ]
+}
